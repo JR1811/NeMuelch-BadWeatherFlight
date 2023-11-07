@@ -14,14 +14,13 @@
     </a>
 </h1>
 
-This mod changes the default behaviour of the "FallFlying" movement used with Elytras.
+This mod changes the default behavior of the "FallFlying" movement used with Elytras and similar items.
 
 ### Features
 
-- When the Entity experiences bad weather conditions, it will be more difficult to handle the fallflying state (flying with Elytra).
-- Fallflying players can't open their inventory while flying.
-- Every Feature, additional conditions and their GUI warning can be adjusted using the config file (Cloth Config needed)
-
+- When the Entity experiences bad weather conditions, it will be more difficult to handle the FallFlying state.
+- Players in the FallFlying state can't open their inventory.
+- Every feature, additional conditions and their GUI warning can be adjusted using the config file (Cloth Config needed)
 
 [](https://c.tenor.com/By6XN6Lyx48AAAAj/plague-doctor.gif)
 
