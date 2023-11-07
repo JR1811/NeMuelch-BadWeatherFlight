@@ -4,9 +4,9 @@ package net.shirojr.fallflyingrestrictions.config.structure;
 public class WarningData {
     private boolean modifiedMovement;
     private boolean blockedInventory;
-    public WarningData(boolean modifiedMovement, boolean blockedInventory) {
-        this.modifiedMovement = modifiedMovement;
-        this.blockedInventory = blockedInventory;
+    public WarningData() {
+        this.modifiedMovement = true;
+        this.blockedInventory = true;
     }
 
     public boolean enabledMovementWanring() {
