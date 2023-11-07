@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.shirojr.fallflyingrestrictions.config.ConfigInit;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,7 +27,7 @@ public class MinecraftClientMixin {
         if (clientPlayer.isFallFlying() && isSurvival && ConfigInit.CONFIG.toggleFeatures.enabledInventoryBlock()) {
             if (client.options.inventoryKey.isPressed()) {
                 if (ConfigInit.CONFIG.displayWarning.enabledBlockedInventoryWarning()) {
-                    clientPlayer.sendMessage(Text.translatable("notification.fallflyingrestrictions.inventoryblock"), true);
+                    clientPlayer.sendMessage(new TranslatableText("notification.fallflyingrestrictions.inventoryblock"), true);
                 }
                 return false;
             }

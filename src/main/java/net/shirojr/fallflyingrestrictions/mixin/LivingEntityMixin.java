@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -30,7 +31,7 @@ public class LivingEntityMixin {
         }
         LoggerUtil.devLogger(String.format("applying bad condition flight | %s", instance.getWorld()));
         if (ConfigInit.CONFIG.displayWarning.enabledMovementWanring() && instance instanceof ServerPlayerEntity player) {
-            player.sendMessage(Text.translatable("notification.fallflyingrestrictions.bad_flying_condition"), true);
+            player.sendMessage(new TranslatableText("notification.fallflyingrestrictions.bad_flying_condition"), true);
         }
         Vec3d downForce = new Vec3d(0.0, -(ConfigInit.CONFIG.downForce), 0.0);
         instance.setVelocity(vec3d.add(downForce));
