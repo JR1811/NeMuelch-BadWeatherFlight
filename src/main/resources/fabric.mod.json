@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "fallflyingrestrictions",
+	"version": "${version}",
+	"name": "NeMuelch's FallFlying Restrictions",
+	"description": "Changes the default FallFlying behaviour, such as movement and other aspects, to be more restrictive.",
+	"authors": [
+		"ShiroJR - Dev"
+	],
+	"contact": {
+		"homepage": "https://github.com/JR1811",
+		"sources": "https://github.com/JR1811/fallflyingrestrictions"
+	},
+	"license": "MIT",
+	"icon": "assets/fallflyingrestrictions/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.shirojr.fallflyingrestrictions.FallFlyingRestrictions"
+		],
+		"preLaunch": [
+			"net.shirojr.fallflyingrestrictions.FallFlyingRestrictionsPreLaunch"
+		]
+	},
+	"mixins": [
+		"fallflyingrestrictions.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.24",
+		"minecraft": "~1.19.2",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
