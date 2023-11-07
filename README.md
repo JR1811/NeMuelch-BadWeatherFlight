@@ -1,4 +1,4 @@
-![NeMuelch-FallFlyingRestrictions](https://github.com/JR1811/NeMuelch-FallFlyingRestrictions/assets/36027822/507b4311-9b04-429d-9a8c-2de79baed631)
+![NeMuelch-FallFlyingRestrictions](https://github.com/JR1811/NeMuelch-FallFlyingRestrictions/assets/36027822/eeb90c96-a9cd-4908-8fe6-ecfcd8f280a2)
 
 # NeMuelch's FallFlyingRestrictions Fabric Mod for Minecraft
 
