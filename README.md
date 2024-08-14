@@ -14,7 +14,7 @@
     </a>
 </h1>
 
-This mod changes the default behavior of the "FallFlying" movement used with Elytras and similar items.
+This mod changes the default behavior of the "FallFlying" movement used by Elytras and similar items.
 
 ### Features
 
