@@ -29,7 +29,7 @@ public class LivingEntityMixin {
             return;
         }
         LoggerUtil.devLogger(String.format("applying bad condition flight | %s", instance.getWorld()));
-        if (ConfigInit.CONFIG.displayWarning.enabledMovementWanring() && instance instanceof ServerPlayerEntity player) {
+        if (ConfigInit.CONFIG.displayWarning.enabledMovementWarning() && instance instanceof ServerPlayerEntity player) {
             player.sendMessage(Text.translatable("notification.fallflyingrestrictions.bad_flying_condition"), true);
         }
         Vec3d downForce = new Vec3d(0.0, -(ConfigInit.CONFIG.downForce), 0.0);
