@@ -3,6 +3,7 @@ package net.shirojr.fallflyingrestrictions.config.structure;
 @SuppressWarnings({"FieldMayBeFinal"})
 public class WarningData {
     private boolean modifiedMovement;
+    private boolean flyingTooHigh;
     private boolean blockedInventory;
     private boolean blockedEating;
 
@@ -10,6 +11,7 @@ public class WarningData {
         this.modifiedMovement = true;
         this.blockedInventory = true;
         this.blockedEating = true;
+        this.flyingTooHigh = true;
     }
 
     public boolean enabledMovementWarning() {
@@ -22,5 +24,9 @@ public class WarningData {
 
     public boolean enabledEatingWhileFlyingWarning() {
         return blockedEating;
+    }
+
+    public boolean enabledFlyingTooHighWarning() {
+        return flyingTooHigh;
     }
 }

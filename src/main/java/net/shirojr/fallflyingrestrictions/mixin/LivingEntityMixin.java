@@ -17,23 +17,36 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 
 @Mixin(LivingEntity.class)
-public class LivingEntityMixin {
+public abstract class LivingEntityMixin {
+
     @Redirect(method = "travel",
             slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isFallFlying()Z")),
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V")
     )
     private void badweatherflight$badWeatherFlying(LivingEntity instance, Vec3d vec3d) {
-        if (shouldApplyDefaultValue(instance) || isOptimalFlyingCondition(instance)) {
+        if (shouldApplyDefaultValue(instance) || (isOptimalFlyingCondition(instance) && !isFlyingTooHigh(instance))) {
             LoggerUtil.devLogger("applying normal flight | " + instance.getWorld());
             instance.setVelocity(vec3d);
             return;
         }
-        LoggerUtil.devLogger(String.format("applying bad condition flight | %s", instance.getWorld()));
-        if (ConfigInit.CONFIG.displayWarning.enabledMovementWarning() && instance instanceof ServerPlayerEntity player) {
-            player.sendMessage(Text.translatable("notification.fallflyingrestrictions.bad_flying_condition"), true);
+
+        Vec3d heightDownForce = Vec3d.ZERO;
+        Vec3d badWeatherDownForce = Vec3d.ZERO;
+
+        if (isFlyingTooHigh(instance)) {
+            if (ConfigInit.CONFIG.displayWarning.enabledFlyingTooHighWarning() && instance instanceof ServerPlayerEntity player) {
+                player.sendMessage(Text.translatable("notification.fallflyingrestrictions.flying_too_high"), true);
+            }
+            heightDownForce = new Vec3d(0.0, -(ConfigInit.CONFIG.restrictionValues.getFlyingTooHighDownForce()), 0.0);
         }
-        Vec3d downForce = new Vec3d(0.0, -(ConfigInit.CONFIG.downForce), 0.0);
-        instance.setVelocity(vec3d.add(downForce));
+        if (!isOptimalFlyingCondition(instance)) {
+            if (ConfigInit.CONFIG.displayWarning.enabledMovementWarning() && instance instanceof ServerPlayerEntity player) {
+                player.sendMessage(Text.translatable("notification.fallflyingrestrictions.bad_flying_condition"), true);
+            }
+            badWeatherDownForce = new Vec3d(0.0, -(ConfigInit.CONFIG.restrictionValues.getBadWeatherDownForce()), 0.0);
+        }
+
+        instance.setVelocity(vec3d.add(heightDownForce).add(badWeatherDownForce));
     }
 
     /**
@@ -45,8 +58,7 @@ public class LivingEntityMixin {
     private static boolean shouldApplyDefaultValue(LivingEntity instance) {
         if (!ConfigInit.CONFIG.toggleFeatures.enabledMovementChanges()) return true;
         if (!(instance instanceof PlayerEntity player)) return true;
-        if (player.getAbilities().creativeMode || player.isSpectator()) return true;
-        return false;
+        return player.getAbilities().creativeMode || player.isSpectator();
     }
 
     /**
@@ -61,7 +73,7 @@ public class LivingEntityMixin {
 
         boolean doRoofSafetyCheck = ConfigInit.CONFIG.toggleFeatures.enabledRoofAboveHeadSafety();
         boolean doHeightSafetyCheck = ConfigInit.CONFIG.toggleFeatures.enabledSafeFlightHeight();
-        int safeBlockHeight = Math.max(ConfigInit.CONFIG.safeBlockHeight, 1);
+        int safeBlockHeight = Math.max(ConfigInit.CONFIG.restrictionValues.getSafeAboveGroundHeight(), 1);
 
         if (!world.isThundering() && !world.isRaining()) return true;
         if (!world.isSkyVisible(livingEntityPos) && doRoofSafetyCheck) return true;
@@ -76,5 +88,11 @@ public class LivingEntityMixin {
             livingEntityPos = livingEntityPos.down();
         }
         return isSafeHeight;
+    }
+
+    @Unique
+    private static boolean isFlyingTooHigh(LivingEntity livingEntity) {
+        if (!ConfigInit.CONFIG.toggleFeatures.enabledFlyingTooHigh()) return false;
+        return livingEntity.getBlockPos().getY() > ConfigInit.CONFIG.restrictionValues.getFlyingHeightLimit();
     }
 }
