@@ -19,6 +19,7 @@ This mod changes the default behavior of the "FallFlying" movement used by Elytr
 ### Features
 
 - If the entity experiences bad weather conditions, it will be more difficult to handle the FallFlying state.
+- Flying too high makes it more difficult to handle the FallFlying state
 - Players in the FallFlying state can't open their inventory.
 - Every feature, additional conditions and their GUI warning can be adjusted using the config file (Cloth Config needed)
 
