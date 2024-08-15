@@ -1,13 +1,15 @@
 package net.shirojr.fallflyingrestrictions.config.structure;
 @SuppressWarnings({"FieldMayBeFinal"})
 public class FeatureToggleData {
-    private boolean movementChanges, flightHeightSafety, roofAboveHeadSafety, inventoryBlock;
+    private boolean movementChanges, flightHeightAboveGroundSafety, flyingTooHigh, roofAboveHeadSafety, inventoryBlock, eatingBlock;
 
     public FeatureToggleData() {
         this.movementChanges = true;
-        this.flightHeightSafety = true;
+        this.flightHeightAboveGroundSafety = true;
+        this.flyingTooHigh = false;
         this.roofAboveHeadSafety = true;
         this.inventoryBlock = true;
+        this.eatingBlock = false;
     }
 
     public boolean enabledMovementChanges() {
@@ -15,7 +17,11 @@ public class FeatureToggleData {
     }
 
     public boolean enabledSafeFlightHeight() {
-        return flightHeightSafety;
+        return flightHeightAboveGroundSafety;
+    }
+
+    public boolean enabledFlyingTooHigh() {
+        return flyingTooHigh;
     }
 
     public boolean enabledRoofAboveHeadSafety() {
@@ -24,5 +30,9 @@ public class FeatureToggleData {
 
     public boolean enabledInventoryBlock() {
         return inventoryBlock;
+    }
+
+    public boolean enabledEatingWhileFlyingBlock() {
+        return eatingBlock;
     }
 }

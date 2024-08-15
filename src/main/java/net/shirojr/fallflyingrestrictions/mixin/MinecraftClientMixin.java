@@ -27,7 +27,7 @@ public class MinecraftClientMixin {
         if (clientPlayer.isFallFlying() && isSurvival && ConfigInit.CONFIG.toggleFeatures.enabledInventoryBlock()) {
             if (client.options.inventoryKey.isPressed()) {
                 if (ConfigInit.CONFIG.displayWarning.enabledBlockedInventoryWarning()) {
-                    clientPlayer.sendMessage(new TranslatableText("notification.fallflyingrestrictions.inventoryblock"), true);
+                    clientPlayer.sendMessage(Text.translatable("notification.fallflyingrestrictions.inventory_block"), true);
                 }
                 return false;
             }
