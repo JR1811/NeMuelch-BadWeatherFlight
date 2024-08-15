@@ -3,7 +3,6 @@ package net.shirojr.fallflyingrestrictions.mixin;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.shirojr.fallflyingrestrictions.config.ConfigInit;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +17,7 @@ public class MinecraftClientMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/KeyBinding;wasPressed()Z", ordinal = 0)
     )
     private boolean badweatherflight$blockInventoryScreen(boolean original) {
-        MinecraftClient client = (MinecraftClient) (Object)this;
+        MinecraftClient client = (MinecraftClient) (Object) this;
         PlayerEntity clientPlayer = client.player;
         if (clientPlayer == null) return original;
 
@@ -27,7 +26,7 @@ public class MinecraftClientMixin {
         if (clientPlayer.isFallFlying() && isSurvival && ConfigInit.CONFIG.toggleFeatures.enabledInventoryBlock()) {
             if (client.options.inventoryKey.isPressed()) {
                 if (ConfigInit.CONFIG.displayWarning.enabledBlockedInventoryWarning()) {
-                    clientPlayer.sendMessage(Text.translatable("notification.fallflyingrestrictions.inventory_block"), true);
+                    clientPlayer.sendMessage(new TranslatableText("notification.fallflyingrestrictions.inventory_block"), true);
                 }
                 return false;
             }
