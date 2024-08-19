@@ -1,5 +1,7 @@
 package net.shirojr.fallflyingrestrictions.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,13 +15,47 @@ import net.shirojr.fallflyingrestrictions.util.LoggerUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 
-    @Redirect(method = "travel",
+    @WrapOperation(method = "travel",
+            slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isFallFlying()Z")),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V")
+    )
+    private void badweatherflight$flyingAdjustments(LivingEntity instance, Vec3d vec3d, Operation<Void> original) {
+        if (shouldApplyDefaultValue(instance) || (isOptimalFlyingCondition(instance) && !isFlyingTooHigh(instance))) {
+            LoggerUtil.devLogger("applying normal flight | " + instance.getWorld());
+            original.call(instance, vec3d);
+            return;
+        }
+
+        Vec3d heightDownForce = Vec3d.ZERO;
+        Vec3d badWeatherDownForce = Vec3d.ZERO;
+
+        if (isFlyingTooHigh(instance)) {
+            if (ConfigInit.CONFIG.displayWarning.enabledFlyingTooHighWarning() && instance instanceof ServerPlayerEntity player) {
+                player.sendMessage(new TranslatableText("notification.fallflyingrestrictions.flying_too_high"), true);
+            }
+            heightDownForce = new Vec3d(0.0, -(ConfigInit.CONFIG.restrictionValues.getFlyingTooHighDownForce()), 0.0);
+        }
+        if (!isOptimalFlyingCondition(instance)) {
+            if (ConfigInit.CONFIG.displayWarning.enabledMovementWarning() && instance instanceof ServerPlayerEntity player) {
+                player.sendMessage(new TranslatableText("notification.fallflyingrestrictions.bad_flying_condition"), true);
+            }
+            badWeatherDownForce = new Vec3d(0.0, -(ConfigInit.CONFIG.restrictionValues.getBadWeatherDownForce()), 0.0);
+        }
+
+        instance.setVelocity(vec3d.add(heightDownForce).add(badWeatherDownForce));
+    }
+
+
+
+
+
+
+    /*@Redirect(method = "travel",
             slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isFallFlying()Z")),
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V")
     )
@@ -47,7 +83,7 @@ public abstract class LivingEntityMixin {
         }
 
         instance.setVelocity(vec3d.add(heightDownForce).add(badWeatherDownForce));
-    }
+    }*/
 
     /**
      * Utility method which considers config entries, type of entity and game mode.
