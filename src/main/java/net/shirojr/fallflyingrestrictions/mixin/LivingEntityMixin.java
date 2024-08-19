@@ -50,41 +50,6 @@ public abstract class LivingEntityMixin {
         instance.setVelocity(vec3d.add(heightDownForce).add(badWeatherDownForce));
     }
 
-
-
-
-
-
-    /*@Redirect(method = "travel",
-            slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isFallFlying()Z")),
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V")
-    )
-    private void badweatherflight$badWeatherFlying(LivingEntity instance, Vec3d vec3d) {
-        if (shouldApplyDefaultValue(instance) || (isOptimalFlyingCondition(instance) && !isFlyingTooHigh(instance))) {
-            LoggerUtil.devLogger("applying normal flight | " + instance.getWorld());
-            instance.setVelocity(vec3d);
-            return;
-        }
-
-        Vec3d heightDownForce = Vec3d.ZERO;
-        Vec3d badWeatherDownForce = Vec3d.ZERO;
-
-        if (isFlyingTooHigh(instance)) {
-            if (ConfigInit.CONFIG.displayWarning.enabledFlyingTooHighWarning() && instance instanceof ServerPlayerEntity player) {
-                player.sendMessage(new TranslatableText("notification.fallflyingrestrictions.flying_too_high"), true);
-            }
-            heightDownForce = new Vec3d(0.0, -(ConfigInit.CONFIG.restrictionValues.getFlyingTooHighDownForce()), 0.0);
-        }
-        if (!isOptimalFlyingCondition(instance)) {
-            if (ConfigInit.CONFIG.displayWarning.enabledMovementWarning() && instance instanceof ServerPlayerEntity player) {
-                player.sendMessage(new TranslatableText("notification.fallflyingrestrictions.bad_flying_condition"), true);
-            }
-            badWeatherDownForce = new Vec3d(0.0, -(ConfigInit.CONFIG.restrictionValues.getBadWeatherDownForce()), 0.0);
-        }
-
-        instance.setVelocity(vec3d.add(heightDownForce).add(badWeatherDownForce));
-    }*/
-
     /**
      * Utility method which considers config entries, type of entity and game mode.
      *
