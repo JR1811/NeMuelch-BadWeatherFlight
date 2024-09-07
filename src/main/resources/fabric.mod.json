@@ -17,6 +17,9 @@
 	"entrypoints": {
 		"main": [
 			"net.shirojr.fallflyingrestrictions.FallFlyingRestrictions"
+		],
+		"client": [
+			"net.shirojr.fallflyingrestrictions.FallFlyingRestrictionsClient"
 		]
 	},
 	"mixins": [

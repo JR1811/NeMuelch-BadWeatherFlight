@@ -1,5 +1,7 @@
 package net.shirojr.fallflyingrestrictions.config.structure;
 
+import net.minecraft.network.PacketByteBuf;
+
 @SuppressWarnings({"FieldMayBeFinal"})
 public class WarningData {
     private boolean modifiedMovement;
@@ -28,5 +30,21 @@ public class WarningData {
 
     public boolean enabledFlyingTooHighWarning() {
         return flyingTooHigh;
+    }
+
+    public static WarningData fromPacketByteBuf(PacketByteBuf buf) {
+        WarningData data = new WarningData();
+        data.modifiedMovement = buf.readBoolean();
+        data.flyingTooHigh = buf.readBoolean();
+        data.blockedInventory = buf.readBoolean();
+        data.blockedEating = buf.readBoolean();
+        return data;
+    }
+
+    public static void toPacketByteBuf(PacketByteBuf buf, WarningData data) {
+        buf.writeBoolean(data.modifiedMovement);
+        buf.writeBoolean(data.flyingTooHigh);
+        buf.writeBoolean(data.blockedInventory);
+        buf.writeBoolean(data.blockedEating);
     }
 }

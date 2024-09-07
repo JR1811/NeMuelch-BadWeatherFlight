@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class PlayerEntityMixin {
     @Inject(method = "canConsume", at = @At("HEAD"), cancellable = true)
     private void blockItemEating(boolean ignoreHunger, CallbackInfoReturnable<Boolean> cir) {
-        if (!ConfigInit.CONFIG.toggleFeatures.enabledEatingWhileFlyingBlock()) return;
         PlayerEntity player = (PlayerEntity) (Object) this;
+        if (!ConfigInit.CONFIG.toggleFeatures.enabledEatingWhileFlyingBlock()) return;
         if (player.isFallFlying() && player.getHungerManager().isNotFull()) {
             if (ConfigInit.CONFIG.displayWarning.enabledEatingWhileFlyingWarning()) {
                 player.sendMessage(new TranslatableText("notification.fallflyingrestrictions.eating_block"), true);

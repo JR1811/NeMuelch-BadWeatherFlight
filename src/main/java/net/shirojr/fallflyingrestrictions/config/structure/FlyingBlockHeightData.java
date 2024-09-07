@@ -1,5 +1,7 @@
 package net.shirojr.fallflyingrestrictions.config.structure;
 
+import net.minecraft.network.PacketByteBuf;
+
 @SuppressWarnings("FieldMayBeFinal")
 public class FlyingBlockHeightData {
     private double badWeatherDownForce;
@@ -29,5 +31,21 @@ public class FlyingBlockHeightData {
 
     public int getFlyingHeightLimit() {
         return flyingHeightLimit;
+    }
+
+    public static FlyingBlockHeightData fromPacketByteBuf(PacketByteBuf buf) {
+        FlyingBlockHeightData data = new FlyingBlockHeightData();
+        data.badWeatherDownForce = buf.readDouble();
+        data.flyingTooHighDownForce = buf.readDouble();
+        data.safeAboveGroundHeight = buf.readInt();
+        data.flyingHeightLimit = buf.readInt();
+        return data;
+    }
+
+    public static void toPacketByteBuf(PacketByteBuf buf, FlyingBlockHeightData data) {
+        buf.writeDouble(data.badWeatherDownForce);
+        buf.writeDouble(data.flyingTooHighDownForce);
+        buf.writeInt(data.safeAboveGroundHeight);
+        buf.writeInt(data.flyingHeightLimit);
     }
 }
