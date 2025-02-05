@@ -65,7 +65,7 @@ public class BoxShape implements Volume {
     public boolean contains(BlockPos pos) {
         boolean isSmaller = pos.getX() < this.min.getX() || pos.getZ() < this.min.getZ();
         boolean isBigger = pos.getX() > this.max.getX() || pos.getZ() > this.max.getZ();
-        if (!this.considerHeight) {
+        if (this.considerHeight) {
             if (pos.getY() < this.min.getY()) {
                 isSmaller = true;
             } else if (pos.getY() > this.max.getY()) {
