@@ -2,5 +2,7 @@
   "notification.fallflyingrestrictions.bad_flying_condition": "§4[Bad Flying Condition]§r Flying will be harder now!",
   "notification.fallflyingrestrictions.flying_too_high": "§4[Too High]§r Can't fly that high!",
   "notification.fallflyingrestrictions.inventory_block": "§4[No Access]§r Inventory is blocked while flying!",
-  "notification.fallflyingrestrictions.eating_block": "§4[No Eating]§r Eating is blocked while flying!"
+  "notification.fallflyingrestrictions.eating_block": "§4[No Eating]§r Eating is blocked while flying!",
+  "notification.fallflyingrestrictions.restricted_zone.prevent_start_flying": "§4[Zone]§r Zone doesn't allow for a take-off!",
+  "notification.fallflyingrestrictions.restricted_zone.interrupt_flying": "§4[Zone]§r Zone doesn't allow flying!"
 }

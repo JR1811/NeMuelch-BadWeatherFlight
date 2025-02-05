@@ -1,6 +1,8 @@
 package net.shirojr.fallflyingrestrictions;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.entity.LivingEntity;
 import net.shirojr.fallflyingrestrictions.data.VolumeData;
 import net.shirojr.fallflyingrestrictions.network.S2CNetworking;
 
@@ -14,5 +16,9 @@ public class FallFlyingRestrictionsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         S2CNetworking.registerS2CPackets();
+    }
+
+    public static boolean isClientPlayer(LivingEntity entity) {
+        return entity.equals(MinecraftClient.getInstance().player);
     }
 }
