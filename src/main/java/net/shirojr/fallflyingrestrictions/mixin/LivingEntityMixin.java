@@ -19,7 +19,6 @@ import org.spongepowered.asm.mixin.injection.Slice;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
-
     @WrapOperation(method = "travel",
             slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isFallFlying()Z")),
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V")
